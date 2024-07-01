@@ -39,6 +39,7 @@ if uploaded_file is not None:
 
 # dropdown Box
 
+    st.dataframe(df)
     user_list = df['user'].unique().tolist()
     user_list.remove('group notification')
     user_list.sort()
