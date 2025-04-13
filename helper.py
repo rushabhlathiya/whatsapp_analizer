@@ -3,6 +3,7 @@ import pandas as pd
 import emoji
 extractor = URLExtract()
 
+
 def fetch_stats(selectedUser, df):
    
    if selectedUser != 'Overall':
@@ -17,7 +18,7 @@ def fetch_stats(selectedUser, df):
       urls.extend(extractor.find_urls(line))
       
       
-   num_media =df[df['message'] =='<Media omitted>'].shape[0] 
+   num_media =df[df['message'] =='< Media omitted >'].shape[0] 
    num_links = len(urls)
    
    return num_msg,len(word),num_media,num_links

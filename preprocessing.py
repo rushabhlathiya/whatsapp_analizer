@@ -1,5 +1,12 @@
 import re
 import pandas as pd
+import nltk
+nltk.download('stopwords')
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+
+
+st_words  = stopwords.words('english')
 def preproces(data):
     patten ='\d{1,2}\/\d{1,2}\/\d{2,4},\s\d{1,2}:\d{2}.(?:am|pm|AM|PM)\s-\s|\d+\/\d+\/\d+,\s\d+:\d+\s-\s'
     msg=re.split(pattern=patten,string= data)[1:]
@@ -32,10 +39,26 @@ def preproces(data):
     df['hour'] = df['date'].dt.hour
     df['minutes'] = df['date'].dt.minute
     df['day_name']=df['date'].dt.day_name()
-    
     df['message']= df['message'].apply(lambda x: x.strip())
+    # Modifation From here
+    num_media =df[df['message'] =='<Media omitted>'].shape[0]
+    df = df[df['user'] != 'group notification']
+    df =df[df['message']!="<Media omitted>"]
+    df = df[df['message'] !='This message was deleted']
+    df = df[df['message'] !='']
+    df['message'] = df['message'].apply(remove_stopwords)
+    # To here
     
-    return df
+    return df,num_media
+
+def remove_stopwords(msg):
+    nost = []
+    t_words = word_tokenize(msg)
+    for word in t_words:
+        if word not in st_words:
+            nost.append(word)
+            
+    return ' '.join(nost)
 
 def year_converter(str):
     year=re.findall('^\d+\/\d+\/(\d+)',str)

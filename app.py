@@ -11,7 +11,6 @@ import seaborn as sns
 
 
 # sideBar
-
 st.sidebar.title("Chat Analizer")
 uploaded_file = st.sidebar.file_uploader("Choose a file")
 if uploaded_file is not None:
@@ -27,7 +26,7 @@ if uploaded_file is not None:
     string_data = stringio.read()
     # st.write(string_data)
 
-    df = p.preproces(string_data)
+    df,num_media = p.preproces(string_data)
     
 
 # f =open('../Data chats\WhatsApp Chat with D2D.txt','r',encoding='utf-8')
@@ -41,7 +40,7 @@ if uploaded_file is not None:
 
     st.dataframe(df)
     user_list = df['user'].unique().tolist()
-    user_list.remove('group notification')
+    # user_list.remove('group notification')
     user_list.sort()
     user_list.insert(0,'Overall')
 
@@ -68,7 +67,7 @@ if uploaded_file is not None:
 
         with col3:
           st.header("Media Shared")
-          st.title(media)
+          st.title(num_media)
 
         
         with col4:
