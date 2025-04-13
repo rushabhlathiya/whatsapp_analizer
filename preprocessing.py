@@ -3,12 +3,12 @@ import pandas as pd
 import nltk
 nltk.download('stopwords')
 from nltk.corpus import stopwords
-from nltk.tokenize import word_tokenize
+# from nltk.tokenize import word_tokenize
 
-try:
-    nltk.data.find('tokenizers/punkt')
-except LookupError:
-    nltk.download('punkt')
+# try:
+#     nltk.data.find('tokenizers/punkt')
+# except LookupError:
+#     nltk.download('punkt')
 
 st_words  = stopwords.words('english')
 def preproces(data):
@@ -57,7 +57,7 @@ def preproces(data):
 
 def remove_stopwords(msg):
     nost = []
-    t_words = word_tokenize(msg)
+    t_words = msg.split(" ")
     for word in t_words:
         if word not in st_words:
             nost.append(word)
